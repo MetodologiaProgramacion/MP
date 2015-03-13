@@ -16,6 +16,6 @@ Punto sup_izquierda(const Rectangulo& rectangulo);
 Punto inf_derecha(const Rectangulo& rectangulo);
 double Area(const Rectangulo& rectangulo);
 bool Interior(const Punto& p, const Rectangulo& r);
-void EscribirRectangulo(Rectangulo& rectangulo);
+void EscribirRectangulo(const Rectangulo& rectangulo);
 
 #endif

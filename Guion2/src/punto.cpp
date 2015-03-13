@@ -22,7 +22,7 @@ bool LeerP(istream& is, Punto& p){
   }
   return false;
 }
-bool EscribirP(ostream& os, Punto& p){
+bool EscribirP(ostream& os, const Punto& p){
   if (os << '(' << p.x << ',' << p.y << ')')
     return true;
 
