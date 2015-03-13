@@ -4,7 +4,7 @@
 
 using namespace std;
 
-bool LeerP(istream &is, Punto &p){
+bool LeerP(std::istream &is, Punto &p){
   if (is.peek() == '('){
     is.ignore();
     if (is >> p.x){
@@ -21,7 +21,8 @@ bool LeerP(istream &is, Punto &p){
   }
   return false;
 }
-bool EscribirP(ostream &os, Punto &p){
+
+bool EscribirP(std::ostream &os, Punto &p){
   if (os << '(' << p.x << ',' << p.y << ')')
     return true;
 

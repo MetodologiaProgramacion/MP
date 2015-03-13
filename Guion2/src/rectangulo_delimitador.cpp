@@ -46,7 +46,7 @@ int leer_puntos(Punto* p, const int MAX, istream &is){
 
 	for (i; i < MAX && correcto; i++){
 		avanzar(is);
-		correcto = Leer(is, p[i]);
+		correcto = LeerP(is, p[i]);
 	}
 
 	return i-1;
