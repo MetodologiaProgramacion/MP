@@ -30,21 +30,38 @@ Punto inf_derecha(const Rectangulo& rectangulo){
 
 double Area(const Rectangulo& rectangulo){
 	double area;
+<<<<<<< HEAD
 	Punto sup_iz = sup_izquierda(rectangulo);
+=======
+	Punto sup_iz;
+
+	sup_iz = sup_izquierda(rectangulo);
+>>>>>>> 605c5899efb3190aef295d39947f5579790e8a99
 	area = Distancia(sup_iz, rectangulo.sup_derecha) * Distancia(sup_iz, rectangulo.inf_izquierda);
 
 	return area;
 }
 
+<<<<<<< HEAD
 bool Interior(const Punto& p, const Rectangulo& r){
+=======
+bool Interior(const Punto &p, const Rectangulo &r){
+>>>>>>> 605c5899efb3190aef295d39947f5579790e8a99
 	return (p.x > r.inf_izquierda.x && p.x < r.sup_derecha.x) && (p.y > r.inf_izquierda.y && p.y < r.sup_derecha.y);
 }
 
 void EscribirRectangulo(const Rectangulo& rectangulo){
 	cout << "Rectángulo:\n";
+<<<<<<< HEAD
 	EscribirP(cout,sup_izquierda(rectangulo));
 	EscribirP(cout,rectangulo.sup_derecha);
 	EscribirP(cout,inf_derecha(rectangulo));
 	EscribirP(cout,rectangulo.inf_izquierda);
+=======
+	EscribirP(cout, sup_izquierda(rectangulo));
+	EscribirP(cout, rectangulo.sup_derecha);
+	EscribirP(cout, inf_derecha(rectangulo));
+	EscribirP(cout, rectangulo.inf_izquierda);
+>>>>>>> 605c5899efb3190aef295d39947f5579790e8a99
 	cout << endl;
 }
