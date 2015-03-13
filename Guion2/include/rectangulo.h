@@ -1,6 +1,8 @@
 #ifndef _RECTANGULO_H_
 #define _RECTANGULO_H_
 
+#include <iostream>
+#include <fstream>
 #include "punto.h"
 
 struct Rectangulo{
@@ -8,11 +10,11 @@ struct Rectangulo{
 	Punto sup_derecha;
 };
 
-void InicializarRectangulo(Rectangulo &rectangulo, const Punto &inf_i, const Punto &sup_d);
-Punto sup_izquierda(Rectangulo rectangulo);
-Punto inf_derecha(Rectangulo rectangulo);
-double Area(const Rectangulo &rectangulo);
-bool Interior(const Punto &p, const Rectangulo &r);
-void EscribirRectangulo(Rectangulo rectangulo);
+void InicializarRectangulo(Rectangulo& rectangulo, const Punto& inf_i, const Punto& sup_d);
+Punto sup_izquierda(const Rectangulo& rectangulo);
+Punto inf_derecha(const Rectangulo& rectangulo);
+double Area(const Rectangulo& rectangulo);
+bool Interior(const Punto& p, const Rectangulo& r);
+void EscribirRectangulo(Rectangulo& rectangulo);
 
 #endif

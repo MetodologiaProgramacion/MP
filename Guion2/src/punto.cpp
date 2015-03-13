@@ -1,10 +1,11 @@
 #include <iostream>
+#include <fstream>
 #include <cmath> // sqrt, M_PI
 #include "punto.h"
 
 using namespace std;
 
-bool LeerP(istream &is, Punto &p){
+bool LeerP(istream& is, Punto& p){
   if (is.peek() == '('){
     is.ignore();
     if (is >> p.x){
@@ -21,7 +22,7 @@ bool LeerP(istream &is, Punto &p){
   }
   return false;
 }
-bool EscribirP(ostream &os, Punto &p){
+bool EscribirP(ostream& os, Punto& p){
   if (os << '(' << p.x << ',' << p.y << ')')
     return true;
 
@@ -29,7 +30,7 @@ bool EscribirP(ostream &os, Punto &p){
 
 }
 // FIXME: Lee un punto en el formato (x,y), incluyendo la lectura de '(' ',' y ')'
-void LeerPunto(Punto &p)
+void LeerPunto(Punto& p)
 {
   char c;
   cin >> c;
@@ -40,32 +41,32 @@ void LeerPunto(Punto &p)
 }
 
 // FIXME: Escribe un punto en formato (x,y), incluyendo la escritura de '(' ',' y ')'
-void EscribirPunto (const Punto &p)
+void EscribirPunto (const Punto& p)
 {
   cout << '(' << p.x << ',' << p.y << ')';
 }
 
 // FIXME: Inicializa un punto con dos valores cx cy
-void InicializarPunto (Punto &p, double cx, double cy)
+void InicializarPunto (Punto& p, double cx, double cy)
 {
   p.x = cx;
   p.y = cy;
 }
 
 // FIXME: Devuelve la coordenada X del punto p
-double GetX (const Punto &p)
+double GetX (const Punto& p)
 {
   return p.x;
 }
 
 // FIXME: Devuelve la coordenada Y del punto p
-double GetY (const Punto &p)
+double GetY (const Punto& p)
 {
   return p.y;
 }
 
 // FIXME: Devuelve la distancia euclídea entre p1 y p2
-double Distancia (const Punto &p1, const Punto &p2)
+double Distancia (const Punto& p1, const Punto& p2)
 {
   double distancia, dif_x, dif_y;
   dif_x = p1.x - p2.x;
@@ -75,7 +76,7 @@ double Distancia (const Punto &p1, const Punto &p2)
 }
 
 // FIXME: Devuelve el punto que está entre p1 y p2 (más cercano a igual distancia de p1 y p2)
-Punto PuntoMedio (const Punto &p1, const Punto &p2)
+Punto PuntoMedio (const Punto& p1, const Punto& p2)
 {
   Punto punto_medio;
   punto_medio.x = (p1.x + p2.x)/2;

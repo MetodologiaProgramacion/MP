@@ -1,11 +1,12 @@
 #include <iostream>
+#include <fstream>
 #include <cmath> // sqrt, M_PI
 #include "circulo.h"
 #include "punto.h"
 
 using namespace std;
 
-void Avanzar(istream &is){
+void Avanzar(istream& is){
   while (isspace(is.peek()) || is.peek()=='#'){
     if (is.peek()=='#')
       is.ignore(1024,'\n');
