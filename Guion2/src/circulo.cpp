@@ -9,6 +9,7 @@ using namespace std;
 bool LeerC(istream& is, Circulo& c){
   if (is >> c.radio){
     if (is.peek()=='-'){
+      is.ignore();
       if (LeerP(is,c.centro)){
         return true;
       }

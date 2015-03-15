@@ -1,19 +1,9 @@
 #include <iostream>
-#include <fstream>
 #include <cmath> // sqrt, M_PI
 #include "circulo.h"
 #include "punto.h"
 
 using namespace std;
-
-void Avanzar(istream& is){
-  while (isspace(is.peek()) || is.peek()=='#'){
-    if (is.peek()=='#')
-      is.ignore(1024,'\n');
-    else
-      is.ignore();
-  }
-}
 
 int main()
 {
@@ -21,10 +11,8 @@ int main()
 
   do {
    cout << "Introduzca un circulo en formato radio-(x,y): ";
-   Avanzar(cin);
    LeerC(cin,c1);
    cout << "Introduzca otro circulo: ";
-   Avanzar(cin);
    LeerC(cin,c2);
   } while (Distancia(Centro(c1),Centro(c2))==0);
 
