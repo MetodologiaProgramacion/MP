@@ -4,32 +4,10 @@
 
 using namespace std;
 
-bool Revelar(unsigned char imagen[],char msg[],int n){
-	int pos_img = 0;
-	int pos_msg = 0;
-	char caracter = 'c';
-
-	while (caracter != '\0'){
-		for (int j = 7; j <= 0; j++){
-			if ((1 & imagen[pos_img]) != 0)
-				caracter = (caracter | 1) ;
-			else
-				caracter = caracter & (~1);
-
-			caracter << 1;
-			pos_img++;
-		}
-		msg[pos_msg] = caracter;
-		pos_msg++;
-		if (pos_msg >= n)
-			return false;
-	}
-	return true;
-
-void InsertaCaracter(unsigned char[] imagen, char caracter, char& comienzo);
+void InsertaCaracter(unsigned char imagen[], char caracter, int& comienzo);
 
 
-bool Ocultar(unsigned char[] imagen, int longitud, char[] msg){
+bool Ocultar(unsigned char imagen[], int longitud, char msg[]){
 	char caracter;
 	int ultimo_byte_cambiado;
 	int longitud_msg = strlen(msg);
@@ -42,15 +20,16 @@ bool Ocultar(unsigned char[] imagen, int longitud, char[] msg){
 			caracter = msg[i];
 			InsertaCaracter(imagen, caracter, ++ultimo_byte_cambiado);
 		}
+		InsertaCaracter(imagen, '\0', ++ultimo_byte_cambiado);
 	}
 
 	return correcto;
 }
 
-void InsertaCaracter(unsigned char[] imagen, char caracter, char& comienzo){
+void InsertaCaracter(unsigned char imagen[], char caracter, int& comienzo){
 	char extr = 1;
 	char bit;
-	for (int=0; i < 8; i++, comienzo++){
+	for (int i=0; i < 8; i++, comienzo++){
 		bit = caracter & (extr << i);
 		bit = bit >> i;
 
@@ -60,4 +39,27 @@ void InsertaCaracter(unsigned char[] imagen, char caracter, char& comienzo){
 			imagen[comienzo] = imagen[comienzo] & ~(extr << i);
 		}
 	}
+}
+
+bool Revelar(unsigned char imagen[],char msg[],int n){
+	int pos_img = 0;
+	int pos_msg = 0;
+	char caracter = 'c';
+
+	while (caracter != '\0'){
+		for (int j = 7; j <= 0; j++){
+			if ((1 & imagen[pos_img]) != 0)
+				caracter = (caracter | 1) ;
+			else
+				caracter = caracter & (~1);
+
+			caracter = caracter << 1;
+			pos_img++;
+		}
+		msg[pos_msg] = caracter;
+		pos_msg++;
+		if (pos_msg >= n)
+			return false;
+	}
+	return true;
 }

@@ -16,6 +16,7 @@ int main(){
 	bool error = false;
 
 	cout << "Introduzca el nombre de la imagen: ";
+	cin.getline(nombre, MAXNOMBRE);
 	tipo = LeerTipoImagen(nombre,filas,columnas);
 
 	if (tipo == IMG_PPM){
