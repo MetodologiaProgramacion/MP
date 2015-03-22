@@ -4,39 +4,37 @@
 
 using namespace std;
 
-void InsertaCaracter(unsigned char imagen[], char caracter, int& comienzo);
+void InsertarCaracter(unsigned char imagen[], char caracter, int& comienzo);
 
 
 bool Ocultar(unsigned char imagen[], int longitud, char msg[]){
 	char caracter;
-	int ultimo_byte_cambiado;
+	int ultimo_byte_cambiado = 0;
 	int longitud_msg = strlen(msg);
-	bool correcto = longitud >= longitud_msg;
+	bool correcto = longitud >= longitud_msg*8;
 
 	if (correcto){
-		caracter = msg[0];
-		InsertaCaracter(imagen, caracter, ultimo_byte_cambiado);
-		for (int i=1; i < longitud_msg; i++){
+		for (int i=0; i < longitud_msg; i++){
 			caracter = msg[i];
-			InsertaCaracter(imagen, caracter, ++ultimo_byte_cambiado);
+			InsertarCaracter(imagen, caracter, ultimo_byte_cambiado);
 		}
-		InsertaCaracter(imagen, '\0', ++ultimo_byte_cambiado);
+		InsertarCaracter(imagen, '\0', ultimo_byte_cambiado);
 	}
 
 	return correcto;
 }
 
-void InsertaCaracter(unsigned char imagen[], char caracter, int& comienzo){
-	char extr = 1;
+void InsertarCaracter(unsigned char imagen[], char caracter, int& comienzo){
 	char bit;
 	for (int i=0; i < 8; i++, comienzo++){
-		bit = caracter & (extr << i);
-		bit = bit >> i;
+		bit = caracter & (1 << 7);
+		bit = bit >> 7;
+		caracter = caracter << 1;
 
-		if(bit == 1){
-			imagen[comienzo] = imagen[comienzo] | (extr << i);
+		if(bit == 0){
+			imagen[comienzo] = imagen[comienzo] & ~1;
 		} else {
-			imagen[comienzo] = imagen[comienzo] & ~(extr << i);
+			imagen[comienzo] = imagen[comienzo] | 1;
 		}
 	}
 }
@@ -44,18 +42,19 @@ void InsertaCaracter(unsigned char imagen[], char caracter, int& comienzo){
 bool Revelar(unsigned char imagen[],char msg[],int n){
 	int pos_img = 0;
 	int pos_msg = 0;
-	char caracter = 'c';
+	char caracter = 1;
 
 	while (caracter != '\0'){
-		for (int j = 7; j <= 0; j++){
-			if ((1 & imagen[pos_img]) != 0)
-				caracter = (caracter | 1) ;
-			else
-				caracter = caracter & (~1);
-
+		for (int j=0; j < 8; j++){
 			caracter = caracter << 1;
+
+			if ((1 & imagen[pos_img]) == 1){
+				caracter = caracter | 1;
+			}
+
 			pos_img++;
 		}
+
 		msg[pos_msg] = caracter;
 		pos_msg++;
 		if (pos_msg >= n)

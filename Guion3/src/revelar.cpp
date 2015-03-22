@@ -34,7 +34,7 @@ int main(){
 		cout << "\nError en la lectura de la imagen, fichero no encontrado o formato no válido";
 	else{
 		if (Revelar(imagen,msg,MAXMSG))
-			cout << "El mensaje oculto es:\n" << msg;
+			cout << "El mensaje oculto es:\n" << msg << endl;
 		else
 			cout << "La imagen no contiene ningún mensaje";
 	}
