@@ -25,11 +25,12 @@ bool Revelar(unsigned char imagen[],char msg[],int n){
 			return false;
 	}
 	return true;
+}
 
-void InsertaCaracter(unsigned char[] imagen, char caracter, char& comienzo);
+void InsertaCaracter(unsigned char imagen[], char caracter, char& comienzo);
 
 
-bool Ocultar(unsigned char[] imagen, int longitud, char[] msg){
+bool Ocultar(unsigned char imagen[], int longitud, char msg[]){
 	char caracter;
 	int ultimo_byte_cambiado;
 	int longitud_msg = strlen(msg);
@@ -47,16 +48,17 @@ bool Ocultar(unsigned char[] imagen, int longitud, char[] msg){
 	return correcto;
 }
 
-void InsertaCaracter(unsigned char[] imagen, char caracter, char& comienzo){
+void InsertaCaracter(unsigned char imagen[], char caracter, char& comienzo){
 	char extr = 1;
 	char bit;
-	for (int=0; i < 8; i++, comienzo++){
+	for (int=0; i < 8; i++; comienzo++){
 		bit = caracter & (extr << i);
 		bit = bit >> i;
 
 		if(bit == 1){
 			imagen[comienzo] = imagen[comienzo] | (extr << i);
-		} else {
+		}
+		else {
 			imagen[comienzo] = imagen[comienzo] & ~(extr << i);
 		}
 	}
