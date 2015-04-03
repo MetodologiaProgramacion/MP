@@ -8,7 +8,7 @@
 #ifndef _MATRIZ_OPER__H_
 #define _MATRIZ_OPER__H_
 
-#include<iosfwd> // istream,ostream
+#include <iosfwd> // istream,ostream
 #include "matriz_bit.h"
 
 /**
