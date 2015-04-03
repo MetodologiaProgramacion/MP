@@ -1,7 +1,7 @@
 #include "matriz_bit1.h"
 
 bool Inicializar(MatrizBit& m, int fils, int cols){
-	if (fils > 9 || cols > 9)
+	if (fils > 9 || cols > 9 || fils < 0 || cols < 0)
 		return false;
 	else{
 		m.filas = fils;

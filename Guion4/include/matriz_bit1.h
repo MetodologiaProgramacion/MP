@@ -3,8 +3,10 @@
 
 #include "matriz_bit.h"
 
-struct{
+struct MatrizBit{
 	bool matriz[10][10];
 	int filas;
 	int columnas;
-}
+};
+
+#endif
