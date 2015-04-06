@@ -8,8 +8,6 @@
 
 #ifndef _CODIFICAR_H_
 #define _CODIFICAR_H_
-
-
 /**
   * @brief Oculta un mensaje en un mapa de bits
   *

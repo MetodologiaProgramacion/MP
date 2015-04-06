@@ -9,14 +9,14 @@ TEST=./test
 
 # ************ Generación de ejecutable ************
 
-calcular: $(OBJ)/calcular.o $(OBJ)/matriz_bit.o $(OBJ)/matriz_operaciones.o
+$(BIN)/calcular: $(OBJ)/calcular.o $(OBJ)/matriz_bit.o $(OBJ)/matriz_operaciones.o
 	$(CXX) $(CXXFLAGS) -o $@ $^
 
 $(OBJ)/calcular.o: $(SRC)/calcular.cpp $(INC)/matriz_bit.h $(INC)/matriz_operaciones.h
 	$(CXX) -I$(INC) $(CXXFLAGS) -c -o $@ $<
 
 $(OBJ)/matriz_bit.o: $(INC)/matriz_bit.h $(SRC)/matriz_bit.cpp $(INC)/matriz_bit1.h $(SRC)/matriz_bit1.cpp $(INC)/matriz_bit2.h $(SRC)/matriz_bit2.cpp  $(INC)/matriz_bit3.h $(SRC)/matriz_bit3.cpp $(INC)/matriz_bit4.h $(SRC)/matriz_bit4.cpp
-	$(CXX) -I$(INC) $(CXXFLAGS) -c -o $@ $matriz_bit.cpp
+	$(CXX) -I$(INC) $(CXXFLAGS) -c -o $@ $(SRC)/matriz_bit.cpp
 
 $(OBJ)/matriz_operaciones.o: $(SRC)/matriz_operaciones.cpp $(INC)/matriz_operaciones.h
 	$(CXX) -I$(INC) $(CXXFLAGS) -c -o $@ $<

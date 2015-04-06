@@ -38,7 +38,7 @@ documentacion:
 
 # ************ Limpieza ************
 clean:
-	-rm $(OBJ)/* $(SRC)/*~ $(INC)/*~ ./*~
+	-rm $(OBJ)/*.o
 
 mrproper: clean
-	-rm $(BIN)/* doc/html/*
+	-rm $(BIN)/* ./doc/html/*
