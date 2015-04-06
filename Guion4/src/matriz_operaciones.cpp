@@ -5,32 +5,34 @@
 #include "matriz_operaciones.h"
 using namespace std;
 
-
-enum TipoEntrada{BINARIA_FC, BINARIA, CARACTER_FC, CARACTER, DESCONOCIDO};
+#define MAX_CABECERA 20
+enum TipoEntrada{BINARIA_CABECERA, BINARIA, CARACTER_CABECERA, CARACTER, DESCONOCIDO};
 
 void Avanzar(istream& is);
 char bool_to_char(bool b);
+void Cabecera(istream& is, char* cabecera);
+int ColumnasCabecera(char* cabecera);
 int ColumnasIstream(istream& is);
 int char_to_int(char caracter);
+int FilasCabecera(char* cabecera);
 int FilasIstream(istream& is);
 void IgnorarCabecera(istream& is);
-bool LeerBinariaFc(istream& is, MatrizBit& m);
+bool LeerBinariaCabecera(istream& is, MatrizBit& m);
 bool LeerBinaria(istream& is, MatrizBit& m);
-bool LeerCaracterFc(istream& is, MatrizBit& m);
+bool LeerCaracterCabecera(istream& is, MatrizBit& m);
 bool LeerCaracter(istream& is, MatrizBit& m);
 bool LeerMatriz(istream& is, MatrizBit& m, int f, int c, char cero, char uno);
 TipoEntrada LeerTipoEntrada(istream& is);
-bool TieneFc(istream& is);
+bool TieneCabecera(istream& is);
 
 
 // ES -------------------------------------------------------------------------
 // LECTURA --------------------------------------------------------------------
 bool Leer (const char nombre[], MatrizBit &m){
 	ifstream fichero(nombre);
-	istream& stream = fichero;
-	fichero.close();
 
-	Leer(stream, m);
+	Leer(fichero, m);
+	fichero.close();
 }
 
 bool Leer(istream& is, MatrizBit& m){
@@ -38,9 +40,9 @@ bool Leer(istream& is, MatrizBit& m){
 	TipoEntrada tipo = LeerTipoEntrada(is);
 
 	switch(tipo){
-		case BINARIA_FC: correcto = LeerBinariaFc(is, m);break;
+		case BINARIA_CABECERA: correcto = LeerBinariaCabecera(is, m);break;
 		case BINARIA: correcto = LeerBinaria(is, m);break;
-		case CARACTER_FC: correcto = LeerCaracterFc(is, m);break;
+		case CARACTER_CABECERA: correcto = LeerCaracterCabecera(is, m);break;
 		case CARACTER: correcto = LeerCaracter(is, m);break;
 		case DESCONOCIDO: correcto = false;
 	}
@@ -48,15 +50,15 @@ bool Leer(istream& is, MatrizBit& m){
 	return correcto;
 }
 
-bool LeerBinariaFc(istream& is, MatrizBit& m){
+bool LeerBinariaCabecera(istream& is, MatrizBit& m){
 	bool correcto;
+	char cabecera[MAX_CABECERA];
 	int filas, columnas;
 
-	Avanzar(is);
-	filas = char_to_int(is.get());
-	Avanzar(is);
-	columnas = char_to_int(is.get());
-	Avanzar(is);
+	Cabecera(is, cabecera);
+	filas = FilasCabecera(cabecera);
+	columnas = ColumnasCabecera(cabecera);
+	IgnorarCabecera(is);
 	correcto = LeerMatriz(is, m, filas, columnas, '0', '1');
 
 	return correcto;
@@ -73,15 +75,15 @@ bool LeerBinaria(istream& is, MatrizBit& m){
 	return correcto;
 }
 
-bool LeerCaracterFc(istream& is, MatrizBit& m){
+bool LeerCaracterCabecera(istream& is, MatrizBit& m){
 	bool correcto;
+	char cabecera[MAX_CABECERA];
 	int filas, columnas;
 
-	Avanzar(is);
-	filas = char_to_int(is.get());
-	Avanzar(is);
-	columnas = char_to_int(is.get());
-	Avanzar(is);
+	Cabecera(is, cabecera);
+	filas = FilasCabecera(cabecera);
+	columnas = ColumnasCabecera(cabecera);
+	IgnorarCabecera(is);
 	correcto = LeerMatriz(is, m, filas, columnas, '.', 'X');
 
 	return correcto;
@@ -100,26 +102,28 @@ bool LeerCaracter(istream& is, MatrizBit& m){
 
 bool LeerMatriz(istream& is, MatrizBit& m, int f, int c, char cero, char uno){
 	bool correcto = true;
-	int longitud_fila = c*2;
-	char* fila = new char [longitud_fila];
+	/*char out[100];
+	is.get(out, 100, EOF);
+	cout << out << endl;*/
+	Inicializar(m, f, c);
 
 	for (int i=0; i < f; i++){
-		is.get(fila, longitud_fila);
-		for (int j=0; j < longitud_fila; j++){
-			if (fila[j] == cero){
+		for (int j=0; j < c; j++){
+			Avanzar(is);
+			if (is.peek() == cero){
 				Set(m, i, j, false);
-			} else if (fila[j] == uno){
+			} else if (is.peek() == uno){
 				Set(m, i, j, true);
 			}
+			is.ignore();
 		}
 	}
 
-	delete[] fila;
 	return correcto;
 }
 
 int FilasIstream(istream& is){
-	int filas = 1;
+	int filas = 0;
 
 	while (is.peek() != EOF){
 		if (is.peek() == '\n'){
@@ -146,15 +150,48 @@ int ColumnasIstream(istream& is){
 	return columnas;
 }
 
+int FilasCabecera(char* cabecera){
+	int filas = 0;
+	int i=0;
+
+	// Avanza los esacios del principio
+	for (i; isspace(cabecera[i]); i++);
+	// Obtiene las filas
+	for (i; !isspace(cabecera[i]); i++){
+		filas = filas*10 + char_to_int(cabecera[i]);
+	}
+	return filas;
+}
+
+int ColumnasCabecera(char* cabecera){
+	int columnas = 0;
+	int i=0;
+
+	// Ignora los espacios del principio
+	while (isspace(cabecera[i]))
+		i++;
+	// Ignora las filas
+	while (!isspace(cabecera[i]))
+		i++;
+	// Ignora los espacios intermedios
+	while (isspace(cabecera[i]))
+		i++;
+	// Obtiene las columnas
+	for (i; cabecera[i] > '0' && cabecera[i] <= '9'; i++){
+		columnas = (columnas*10) + char_to_int(cabecera[i]);
+	}
+	return columnas;
+}
+
 TipoEntrada LeerTipoEntrada(istream& is){
 	TipoEntrada tipo = DESCONOCIDO;
 
-	if(TieneFc(is)){
+	if(TieneCabecera(is)){
 		IgnorarCabecera(is);
 		if(is.peek() == '0' || is.peek() == '1'){
-			tipo = BINARIA_FC;
+			tipo = BINARIA_CABECERA;
 		} else if (is.peek() == 'X' || is.peek() == '.'){
-			tipo = CARACTER_FC;
+			tipo = CARACTER_CABECERA;
 		}
 	} else {
 		if(is.peek() == '0' || is.peek() == '1'){
@@ -168,16 +205,15 @@ TipoEntrada LeerTipoEntrada(istream& is){
 	return tipo;
 }
 
-bool TieneFc(istream &is){
+bool TieneCabecera(istream &is){
 	bool tiene_fc = false;
 	bool condicion1 = false;
 	bool condicion2 = false;
-	const int MAX_CABECERA = 20;
 	char cabecera[MAX_CABECERA];
 	char muestra[3];
 
-	is.get(cabecera, MAX_CABECERA, '\n');
-	is.ignore();
+	Cabecera(is, cabecera);
+	IgnorarCabecera(is);
 	is.get(muestra, 3);
 
 	for (int i=0; cabecera[i] != EOF && tiene_fc == false; i++){
@@ -196,6 +232,13 @@ bool TieneFc(istream &is){
 	is.seekg (0, is.beg);
 
 	return tiene_fc;
+}
+
+void Cabecera(istream& is, char* cabecera){
+	is.get(cabecera, MAX_CABECERA - 1, '\n');
+	cabecera[MAX_CABECERA - 1] = EOF;
+
+	is.seekg (0, is.beg);
 }
 
 void IgnorarCabecera(istream& is){
@@ -233,7 +276,7 @@ bool Escribir(ostream& os, const MatrizBit& m){
 
 	for (int i=0; i < filas; i++){
 		for (int j=0; j < columnas; j++){
-			os << bool_to_char(Get(m, i, j));
+			os << Get(m, i, j);
 			os << ' ';
 		}
 		os << endl;
