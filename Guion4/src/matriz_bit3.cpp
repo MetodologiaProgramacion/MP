@@ -5,7 +5,7 @@ bool Inicializar(MatrizBit& m, int fils, int cols){
 		return false;
 	else{
 		m.dimension = (fils << 16) | cols;
-		for (int i = 0; i <= fils*cols; i++){
+		for (int i = 0; i < fils*cols; i++){
 			m.matriz[i] = '0';
 		}
 		return true;
@@ -21,13 +21,13 @@ int Columnas(const MatrizBit& m){
 bool Get(const MatrizBit& m, int f, int c){
 	int columnas = Columnas(m);
 	int posicion = f * columnas + c;
-	return m.matriz[posicion];
+	return m.matriz[posicion - '0'];
 }
 void Set(MatrizBit& m, int f, int c, bool v){
 	int filas = Filas(m);
 	int columnas = Columnas(m);
-	if (f <= filas && c <= columnas){
+	if (f < filas && c < columnas){
 		int posicion = f * columnas + c;
-		m.matriz[posicion] = v;
+		m.matriz[posicion] = (char)v + '0';
 	}
 }

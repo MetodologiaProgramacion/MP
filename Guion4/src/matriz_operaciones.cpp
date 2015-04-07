@@ -29,10 +29,13 @@ bool TieneCabecera(istream& is);
 // ES -------------------------------------------------------------------------
 // LECTURA --------------------------------------------------------------------
 bool Leer (const char nombre[], MatrizBit &m){
+	bool correcto;
 	ifstream fichero(nombre);
 
-	Leer(fichero, m);
+	correcto = Leer(fichero, m);
 	fichero.close();
+
+	return correcto;
 }
 
 bool Leer(istream& is, MatrizBit& m){
@@ -102,20 +105,20 @@ bool LeerCaracter(istream& is, MatrizBit& m){
 
 bool LeerMatriz(istream& is, MatrizBit& m, int f, int c, char cero, char uno){
 	bool correcto = true;
-	/*char out[100];
-	is.get(out, 100, EOF);
-	cout << out << endl;*/
-	Inicializar(m, f, c);
+	
+	correcto = Inicializar(m, f, c);
 
-	for (int i=0; i < f; i++){
-		for (int j=0; j < c; j++){
-			Avanzar(is);
-			if (is.peek() == cero){
-				Set(m, i, j, false);
-			} else if (is.peek() == uno){
-				Set(m, i, j, true);
+	if (correcto){
+		for (int i=0; i < f; i++){
+			for (int j=0; j < c; j++){
+				Avanzar(is);
+					if (is.peek() == cero){
+					Set(m, i, j, false);
+				} else if (is.peek() == uno){
+					Set(m, i, j, true);
+				}
+				is.ignore();
 			}
-			is.ignore();
 		}
 	}
 
@@ -123,7 +126,7 @@ bool LeerMatriz(istream& is, MatrizBit& m, int f, int c, char cero, char uno){
 }
 
 int FilasIstream(istream& is){
-	int filas = 0;
+	int filas = 1;
 
 	while (is.peek() != EOF){
 		if (is.peek() == '\n'){
@@ -206,24 +209,25 @@ TipoEntrada LeerTipoEntrada(istream& is){
 }
 
 bool TieneCabecera(istream &is){
-	bool tiene_fc = false;
+	bool tiene_cabecera = false;
 	bool condicion1 = false;
 	bool condicion2 = false;
 	char cabecera[MAX_CABECERA];
-	char muestra[3];
+	char muestra[4];
 
 	Cabecera(is, cabecera);
 	IgnorarCabecera(is);
-	is.get(muestra, 3);
+	is.get(muestra, 4);
+	cout << muestra << endl;
 
-	for (int i=0; cabecera[i] != EOF && tiene_fc == false; i++){
+	for (int i=0; cabecera[i] != EOF && tiene_cabecera == false; i++){
 		condicion1 = condicion1 || (cabecera[i] >= '2' && cabecera[i] <='9');
 		condicion2 = condicion2 || ((cabecera[i] >= '0' && cabecera[i] <='9') && (cabecera[i+1] >= '0' && cabecera[i+1] <='9'));
-		tiene_fc = tiene_fc || (condicion1 || condicion2);
+		tiene_cabecera = tiene_cabecera || (condicion1 || condicion2);
 	}
 
-	if (!tiene_fc){
-		tiene_fc = (cabecera[0] == '1') &&
+	if (!tiene_cabecera){
+		tiene_cabecera = (cabecera[0] == '1') &&
 				   (cabecera[1] == ' ')	&&
 				   (cabecera[2] == '1') &&
 				   (muestra[0] == '1') &&
@@ -231,7 +235,7 @@ bool TieneCabecera(istream &is){
 	}
 	is.seekg (0, is.beg);
 
-	return tiene_fc;
+	return tiene_cabecera;
 }
 
 void Cabecera(istream& is, char* cabecera){
@@ -291,3 +295,62 @@ char bool_to_char(bool b){
 }
 
 // Operaciones-----------------------------------------------------------------
+bool And(MatrizBit& res, const MatrizBit& m1, const MatrizBit& m2){
+	int filas = Filas(m1);
+	int columnas = Columnas(m1);
+
+	if ((Filas(m1) == Filas(m2)) && (Columnas(m1) == Columnas(m2)) && Inicializar(res, filas, columnas)){
+		for (int i=0; i < filas; i++){
+			for (int j=0; j < columnas; j++){
+				Set(res, i, j, Get(m1, i, j) && Get(m2, i, j));
+			}
+		}
+		return true;
+	}
+	return false;
+}
+
+bool Or(MatrizBit& res, const MatrizBit& m1, const MatrizBit& m2){
+	int filas = Filas(m1);
+	int columnas = Columnas(m1);
+
+	if ((Filas(m1) == Filas(m2)) && (Columnas(m1) == Columnas(m2)) && Inicializar(res, filas, columnas)){
+		for (int i=0; i < filas; i++){
+			for (int j=0; j < columnas; j++){
+				Set(res, i, j, Get(m1, i, j) || Get(m2, i, j));
+			}
+		}
+		return true;
+	}
+	return false;
+}
+
+bool Not(MatrizBit& res, const MatrizBit& m){
+	int filas = Filas(m);
+	int columnas = Columnas(m);
+
+	if (Inicializar(res, filas, columnas)){
+		for (int i=0; i < filas; i++){
+			for (int j=0; j < columnas; j++){
+				Set(res, i, j, !Get(m, i, j));
+			}
+		}
+		return true;
+	}
+	return false;
+}
+
+bool Traspuesta(MatrizBit& res, const MatrizBit& m){
+	int filas = Filas(m);
+	int columnas = Columnas(m);
+
+	if (Inicializar(res, filas, columnas)){
+		for (int i=0; i < filas; i++){
+			for (int j=0; j < columnas; i++){
+				Set(res, j, i, Get(m, i, j));
+			}
+		}
+		return true;
+	}
+	return false;
+}
