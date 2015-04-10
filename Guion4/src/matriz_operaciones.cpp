@@ -129,13 +129,23 @@ bool LeerMatriz(istream& is, MatrizBit& m, int f, int c, char cero, char uno){
 
 int FilasIstream(istream& is){
 	int filas = 1;
+	bool salto_consecutivo = false;
 
 	while (is.peek() != EOF){
-		if (is.peek() == '\n'){
+		if (is.peek() == '\n' && !salto_consecutivo){
 			filas++;
+			salto_consecutivo = true;
+		} else {
+			salto_consecutivo = false;
 		}
 		is.ignore();
 	}
+
+	// Descontamos el salto de linea al final
+	if (salto_consecutivo == true){
+		filas--;
+	}
+	
 	is.seekg(0, is.beg);
 
 	return filas;
@@ -191,15 +201,15 @@ int ColumnasCabecera(char* cabecera){
 TipoEntrada LeerTipoEntrada(istream& is){
 	TipoEntrada tipo = DESCONOCIDO;
 
-	if(TieneCabecera(is)){
+	if (TieneCabecera(is)){
 		IgnorarCabecera(is);
-		if(is.peek() == '0' || is.peek() == '1'){
+		if (is.peek() == '0' || is.peek() == '1'){
 			tipo = BINARIA_CABECERA;
 		} else if (is.peek() == MARCA_UNO || is.peek() == MARCA_CERO){
 			tipo = MARCADA_CABECERA;
 		}
 	} else {
-		if(is.peek() == '0' || is.peek() == '1'){
+		if (is.peek() == '0' || is.peek() == '1'){
 			tipo = BINARIA;
 		} else if (is.peek() == MARCA_UNO || is.peek() == MARCA_CERO){
 			tipo = MARCADA;
