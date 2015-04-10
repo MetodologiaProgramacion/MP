@@ -129,13 +129,20 @@ bool LeerMatriz(istream& is, MatrizBit& m, int f, int c, char cero, char uno){
 
 int FilasIstream(istream& is){
 	int filas = 1;
+	bool salto_consecutivo = false;
 
 	while (is.peek() != EOF){
 		if (is.peek() == '\n'){
 			filas++;
+			salto_consecutivo = true;
 		}
+		else 
+			(salto_consecutivo = false);
 		is.ignore();
 	}
+
+	if (salto_consecutivo == true)
+		filas--;
 	is.seekg(0, is.beg);
 
 	return filas;
