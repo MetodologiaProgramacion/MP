@@ -1,4 +1,6 @@
+#include <cmath>
 #include "matriz_bit3.h"
+
 
 bool Inicializar(MatrizBit& m, int fils, int cols){
 	if (fils * cols > 100 || fils < 0 || cols < 0)
@@ -20,14 +22,14 @@ int Columnas(const MatrizBit& m){
 }
 bool Get(const MatrizBit& m, int f, int c){
 	int columnas = Columnas(m);
-	int posicion = f * (columnas - 1) + c;
-	return m.matriz[posicion];
+	int posicion = f * columnas + c;
+	return m.matriz[posicion]-'0';
 }
 void Set(MatrizBit& m, int f, int c, bool v){
 	int filas = Filas(m);
 	int columnas = Columnas(m);
 	if (f < filas && c < columnas){
-		int posicion = f * (columnas - 1) + c;
-		m.matriz[posicion] = v;
+		int posicion = f * columnas + c;
+		m.matriz[posicion] = v+'0';
 	}
 }
