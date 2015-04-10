@@ -1,11 +1,11 @@
 #include "matriz_bit3.h"
 
 bool Inicializar(MatrizBit& m, int fils, int cols){
-	if (fils * cols >= 100 || fils < 0 || cols < 0)
+	if (fils * cols > 100 || fils < 0 || cols < 0)
 		return false;
 	else{
 		m.dimension = (fils << 16) | cols;
-		for (int i = 0; i <= fils*cols; i++){
+		for (int i = 0; i < fils*cols; i++){
 			m.matriz[i] = '0';
 		}
 		return true;
@@ -20,14 +20,14 @@ int Columnas(const MatrizBit& m){
 }
 bool Get(const MatrizBit& m, int f, int c){
 	int columnas = Columnas(m);
-	int posicion = f * columnas + c;
+	int posicion = f * (columnas - 1) + c;
 	return m.matriz[posicion];
 }
 void Set(MatrizBit& m, int f, int c, bool v){
 	int filas = Filas(m);
 	int columnas = Columnas(m);
-	if (f <= filas && c <= columnas){
-		int posicion = f * columnas + c;
+	if (f < filas && c < columnas){
+		int posicion = f * (columnas - 1) + c;
 		m.matriz[posicion] = v;
 	}
 }
