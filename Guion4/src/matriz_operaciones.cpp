@@ -6,7 +6,9 @@
 using namespace std;
 
 #define MAX_CABECERA 20
-enum TipoEntrada{BINARIA_CABECERA, BINARIA, CARACTER_CABECERA, CARACTER, DESCONOCIDO};
+#define MARCA_CERO '.'
+#define MARCA_UNO 'X'
+enum TipoEntrada{BINARIA_CABECERA, BINARIA, MARCADA_CABECERA, MARCADA, DESCONOCIDO};
 
 void Avanzar(istream& is);
 char bool_to_char(bool b);
@@ -19,8 +21,8 @@ int FilasIstream(istream& is);
 void IgnorarCabecera(istream& is);
 bool LeerBinariaCabecera(istream& is, MatrizBit& m);
 bool LeerBinaria(istream& is, MatrizBit& m);
-bool LeerCaracterCabecera(istream& is, MatrizBit& m);
-bool LeerCaracter(istream& is, MatrizBit& m);
+bool LeerMarcadaCabecera(istream& is, MatrizBit& m);
+bool LeerMarcada(istream& is, MatrizBit& m);
 bool LeerMatriz(istream& is, MatrizBit& m, int f, int c, char cero, char uno);
 TipoEntrada LeerTipoEntrada(istream& is);
 bool TieneCabecera(istream& is);
@@ -45,8 +47,8 @@ bool Leer(istream& is, MatrizBit& m){
 	switch(tipo){
 		case BINARIA_CABECERA: correcto = LeerBinariaCabecera(is, m);break;
 		case BINARIA: correcto = LeerBinaria(is, m);break;
-		case CARACTER_CABECERA: correcto = LeerCaracterCabecera(is, m);break;
-		case CARACTER: correcto = LeerCaracter(is, m);break;
+		case MARCADA_CABECERA: correcto = LeerMarcadaCabecera(is, m);break;
+		case MARCADA: correcto = LeerMarcada(is, m);break;
 		case DESCONOCIDO: correcto = false;
 	}
 
@@ -78,7 +80,7 @@ bool LeerBinaria(istream& is, MatrizBit& m){
 	return correcto;
 }
 
-bool LeerCaracterCabecera(istream& is, MatrizBit& m){
+bool LeerMarcadaCabecera(istream& is, MatrizBit& m){
 	bool correcto;
 	char cabecera[MAX_CABECERA];
 	int filas, columnas;
@@ -87,18 +89,18 @@ bool LeerCaracterCabecera(istream& is, MatrizBit& m){
 	filas = FilasCabecera(cabecera);
 	columnas = ColumnasCabecera(cabecera);
 	IgnorarCabecera(is);
-	correcto = LeerMatriz(is, m, filas, columnas, '.', 'X');
+	correcto = LeerMatriz(is, m, filas, columnas, MARCA_CERO, MARCA_UNO);
 
 	return correcto;
 }
 
-bool LeerCaracter(istream& is, MatrizBit& m){
+bool LeerMarcada(istream& is, MatrizBit& m){
 	bool correcto;
 	int filas, columnas;
 
 	filas = FilasIstream(is);
 	columnas = ColumnasIstream(is);
-	correcto = LeerMatriz(is, m, filas, columnas, '.', 'X');
+	correcto = LeerMatriz(is, m, filas, columnas, MARCA_CERO, MARCA_UNO);
 
 	return correcto;
 }
@@ -112,7 +114,7 @@ bool LeerMatriz(istream& is, MatrizBit& m, int f, int c, char cero, char uno){
 		for (int i=0; i < f; i++){
 			for (int j=0; j < c; j++){
 				Avanzar(is);
-					if (is.peek() == cero){
+				if (is.peek() == cero){
 					Set(m, i, j, false);
 				} else if (is.peek() == uno){
 					Set(m, i, j, true);
@@ -193,14 +195,14 @@ TipoEntrada LeerTipoEntrada(istream& is){
 		IgnorarCabecera(is);
 		if(is.peek() == '0' || is.peek() == '1'){
 			tipo = BINARIA_CABECERA;
-		} else if (is.peek() == 'X' || is.peek() == '.'){
-			tipo = CARACTER_CABECERA;
+		} else if (is.peek() == MARCA_UNO || is.peek() == MARCA_CERO){
+			tipo = MARCADA_CABECERA;
 		}
 	} else {
 		if(is.peek() == '0' || is.peek() == '1'){
 			tipo = BINARIA;
-		} else if (is.peek() == 'X' || is.peek() == '.'){
-			tipo = CARACTER;
+		} else if (is.peek() == MARCA_UNO || is.peek() == MARCA_CERO){
+			tipo = MARCADA;
 		}
 	}
 	is.seekg(0, is.beg);
@@ -218,7 +220,6 @@ bool TieneCabecera(istream &is){
 	Cabecera(is, cabecera);
 	IgnorarCabecera(is);
 	is.get(muestra, 4);
-	cout << muestra << endl;
 
 	for (int i=0; cabecera[i] != EOF && tiene_cabecera == false; i++){
 		condicion1 = condicion1 || (cabecera[i] >= '2' && cabecera[i] <='9');
