@@ -57,7 +57,7 @@ bool Escribir(const char nombre[], const MatrizBit& m);
   * @pre Las dimensiones de @a m1 y @a m2 deben coincidir
   * @post El contenido de @a res contiene el resultado de @a m1 AND @a m2
   */
-void And(MatrizBit& res, const MatrizBit& m1, const MatrizBit& m2);
+bool And(MatrizBit& res, const MatrizBit& m1, const MatrizBit& m2);
 
 /**
   * @brief AND entre dos matrices de booleanos
@@ -68,7 +68,7 @@ void And(MatrizBit& res, const MatrizBit& m1, const MatrizBit& m2);
   * @pre Las dimensiones de @a m1 y @a m2 deben coincidir
   * @post El contenido de @a res contiene el resultado de @a m1 AND @a m2
   */
-void Or(MatrizBit& res, const MatrizBit& m1, const MatrizBit& m2);
+bool Or(MatrizBit& res, const MatrizBit& m1, const MatrizBit& m2);
 
 /**
   * @brief NOT de una matriz de booleanos
@@ -77,7 +77,7 @@ void Or(MatrizBit& res, const MatrizBit& m1, const MatrizBit& m2);
   * @param m Operando
   * @post El contenido de @a res contiene el resultado de NOT @a m
   */
-void Not(MatrizBit& res, const MatrizBit& m);
+bool Not(MatrizBit& res, const MatrizBit& m);
 
 /**
   * @brief Traspuesta de una matriz de booleanos
@@ -86,6 +86,6 @@ void Not(MatrizBit& res, const MatrizBit& m);
   * @param m Operando
   * @post El contenido de @a res contiene la traspuesta de @a m
   */
-void Traspuesta(MatrizBit& res, const MatrizBit& m);
+bool Traspuesta(MatrizBit& res, const MatrizBit& m);
 
 #endif

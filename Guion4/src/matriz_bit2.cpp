@@ -23,6 +23,7 @@ bool Get(const MatrizBit& m, int f, int c){
 	return m.matriz[posicion];
 }
 void Set(MatrizBit& m, int f, int c, bool v){
+<<<<<<< HEAD
 	if (f <= m.filas && c <= m.columnas){
 		int posicion = f * (m.columnas - 1) + c;
 		m.matriz[posicion] = v;
