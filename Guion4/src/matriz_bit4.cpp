@@ -37,6 +37,6 @@ void Set(MatrizBit& m, int f, int c, bool v){
 		if (v)
 			m.matriz[cual_entero] = m.matriz[cual_entero] | (v << posicion_bit);
 		else
-			m.matriz[cual_entero] = m.matriz[cual_entero] & (v << posicion_bit);
+			m.matriz[cual_entero] = m.matriz[cual_entero] & v;
 	}
 }
