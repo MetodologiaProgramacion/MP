@@ -24,7 +24,7 @@ bool Get(const MatrizBit& m, int f, int c){
 	int posicion = f * columnas + c;
 	int cual_entero = posicion/32;
 	int posicion_bit = posicion - 32*cual_entero;
-	bool valor = (m.matriz[cual_entero] & (1 << posicion_bit)) >> posicion_bit;
+	bool valor = (m.matriz[cual_entero] & (unsigned int)(1 << posicion_bit)) >> posicion_bit;
 	return valor;
 }
 void Set(MatrizBit& m, int f, int c, bool v){
@@ -35,8 +35,8 @@ void Set(MatrizBit& m, int f, int c, bool v){
 		int cual_entero = posicion/32;
 		int posicion_bit = posicion - 32*cual_entero;
 		if (v)
-			m.matriz[cual_entero] = m.matriz[cual_entero] | (v << posicion_bit);
+			m.matriz[cual_entero] = m.matriz[cual_entero] | (1 << posicion_bit);
 		else
-			m.matriz[cual_entero] = m.matriz[cual_entero] & v;
+			m.matriz[cual_entero] = m.matriz[cual_entero] & (~(unsigned int)pow(2.0,posicion_bit));
 	}
 }

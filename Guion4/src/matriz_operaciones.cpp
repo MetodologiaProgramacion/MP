@@ -345,9 +345,9 @@ bool Traspuesta(MatrizBit& res, const MatrizBit& m){
 	int filas = Filas(m);
 	int columnas = Columnas(m);
 
-	if (Inicializar(res, filas, columnas)){
+	if (Inicializar(res, columnas, filas)){
 		for (int i=0; i < filas; i++){
-			for (int j=0; j < columnas; i++){
+			for (int j=0; j < columnas; j++){
 				Set(res, j, i, Get(m, i, j));
 			}
 		}
