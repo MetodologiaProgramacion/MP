@@ -23,7 +23,7 @@ $(OBJ)/matriz_operaciones.o: $(SRC)/matriz_operaciones.cpp $(INC)/matriz_operaci
 
 # ************ Limpieza ************
 clean:
-	-rm $(BIN)/calcular $(INC)/*~ $(OBJ)/*.o
+	-rm $(BIN)/calcular $(INC)/~* $(OBJ)/*.o
 
 # ************ Generación de documentación ******************
 documentacion:

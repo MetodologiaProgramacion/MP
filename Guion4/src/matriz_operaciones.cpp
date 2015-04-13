@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <cstring>
+#include <cctype>
 #include "matriz_bit.h"
 #include "matriz_operaciones.h"
 using namespace std;
@@ -132,19 +133,18 @@ int FilasIstream(istream& is){
 	bool salto_consecutivo = false;
 
 	while (is.peek() != EOF){
-		if (is.peek() == '\n' && !salto_consecutivo){
+		if (is.peek() == '\n'){
 			filas++;
 			salto_consecutivo = true;
-		} else {
-			salto_consecutivo = false;
 		}
+		else 
+			(salto_consecutivo = false);
 		is.ignore();
 	}
 
-	// Descontamos el salto de linea al final
-	if (salto_consecutivo == true){
+	// Quita una fila sobrante
+	if (salto_consecutivo)
 		filas--;
-	}
 	
 	is.seekg(0, is.beg);
 
@@ -201,15 +201,15 @@ int ColumnasCabecera(char* cabecera){
 TipoEntrada LeerTipoEntrada(istream& is){
 	TipoEntrada tipo = DESCONOCIDO;
 
-	if (TieneCabecera(is)){
+	if(TieneCabecera(is)){
 		IgnorarCabecera(is);
-		if (is.peek() == '0' || is.peek() == '1'){
+		if(is.peek() == '0' || is.peek() == '1'){
 			tipo = BINARIA_CABECERA;
 		} else if (is.peek() == MARCA_UNO || is.peek() == MARCA_CERO){
 			tipo = MARCADA_CABECERA;
 		}
 	} else {
-		if (is.peek() == '0' || is.peek() == '1'){
+		if(is.peek() == '0' || is.peek() == '1'){
 			tipo = BINARIA;
 		} else if (is.peek() == MARCA_UNO || is.peek() == MARCA_CERO){
 			tipo = MARCADA;
@@ -355,9 +355,9 @@ bool Traspuesta(MatrizBit& res, const MatrizBit& m){
 	int filas = Filas(m);
 	int columnas = Columnas(m);
 
-	if (Inicializar(res, filas, columnas)){
+	if (Inicializar(res, columnas, filas)){
 		for (int i=0; i < filas; i++){
-			for (int j=0; j < columnas; i++){
+			for (int j=0; j < columnas; j++){
 				Set(res, j, i, Get(m, i, j));
 			}
 		}
