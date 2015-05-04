@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <cstring>
+#include <cctype>
 #include "matriz_bit.h"
 #include "matriz_operaciones.h"
 using namespace std;
@@ -141,8 +142,10 @@ int FilasIstream(istream& is){
 		is.ignore();
 	}
 
-	if (salto_consecutivo == true)
+	// Quita una fila sobrante
+	if (salto_consecutivo)
 		filas--;
+	
 	is.seekg(0, is.beg);
 
 	return filas;
