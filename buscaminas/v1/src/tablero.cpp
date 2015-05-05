@@ -18,7 +18,11 @@ void Casilla::cerrar(){
 }
 
 void Casilla::marcar(){
-	estado = MARCADA;
+	if (estado == CERRADA){
+		estado = MARCADA;
+	} else if(estado == MARCADA){
+		estado = CERRADA;
+	}
 }
 
 EstadoCasilla Casilla::get_estado(){

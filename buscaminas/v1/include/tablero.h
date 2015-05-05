@@ -61,7 +61,9 @@ public:
 	void cerrar();
 
 	/**
-  	  * @brief Cambia el estado de la casilla a MARCADA
+  	  * @brief Cambia el estado de la casilla a MARCADA (o a CERRADA si ya estaba en MARCADA)
+  	  *
+  	  * @pre la casilla no puede estar ABIERTA
   	  *
   	  * @see EstadoCasilla
     */
@@ -159,10 +161,12 @@ public:
 	void abrir_casilla(int fila, int columna);
 
 	/**
-  	  * @brief Establece una casilla como marcada
+  	  * @brief Establece una casilla como marcada (o la desmarca si ya estaba marcada)
   	  *
   	  * @param fila fila donde se encuentra la casilla
   	  * @param columna columna donde se encuentra la casilla
+  	  *
+  	  * @pre la casilla debe estar cerrada
   	  *
   	  * @see EstadoCasilla
     */
