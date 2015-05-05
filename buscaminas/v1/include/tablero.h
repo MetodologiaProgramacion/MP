@@ -49,6 +49,8 @@ public:
 	/**
   	  * @brief Cambia el estado de la casilla a ABIERTA
   	  *
+  	  *	@pre la casilla no puede estar MARCADA
+  	  *
   	  * @see EstadoCasilla
     */
 	void abrir();

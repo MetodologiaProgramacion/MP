@@ -10,7 +10,9 @@ Casilla::Casilla(){
 };
 
 void Casilla::abrir(){
-	estado = ABIERTA;
+	if (estado != MARCADA){
+		estado = ABIERTA;
+	}
 }
 
 void Casilla::cerrar(){
