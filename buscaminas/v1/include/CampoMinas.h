@@ -1,4 +1,8 @@
-#include <ctime>
+#ifndef CAMPO_MINAS_H
+#define CAMPO_MINAS_H
+
+#include <cstdlib>
+#include <assert.h>
 #include "tablero.h"
 
 using namespace std;
@@ -24,3 +28,5 @@ public:
 	void PrettyPrint();
 	bool TableroFin();
 };
+
+#endif

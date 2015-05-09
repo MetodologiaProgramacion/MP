@@ -9,6 +9,9 @@
 #ifndef TABLERO_H
 #define TABLERO_H
 
+#include <cstdlib>
+#include <assert.h>
+
 /**
   * @brief Estado de una casilla
   *

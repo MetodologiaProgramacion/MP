@@ -1,6 +1,3 @@
-#include <cstdlib>
-#include <assert.h>
-#include "tablero.h"
 #include "CampoMinas.h"
 using namespace std;
 
