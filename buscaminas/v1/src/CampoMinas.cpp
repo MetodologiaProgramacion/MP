@@ -81,7 +81,7 @@ bool CampoMinas::Abrir(int fila, int columna){
 	puede_abrirse = tablero.get_estado_casilla(fila, columna) == CERRADA;
 	if (puede_abrirse){
 		tablero.abrir_casilla(fila, columna);
-		if (contenido == VACIA){
+		if (contenido == VACIA && NumMinasCerca(fila, columna) == 0){
 			AbrirEntorno(fila, columna);
 		}
 	}

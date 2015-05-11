@@ -10,8 +10,11 @@ LIB= ./lib
 
 all: documentacion $(BIN)/buscaminas
 
-$(BIN)/buscaminas: $(OBJ)/tablero.o $(OBJ)/CampoMinas.o
+$(BIN)/buscaminas: $(OBJ)/buscaminas.o $(OBJ)/tablero.o $(OBJ)/CampoMinas.o
 	$(CXX) -I$(INC) $(CXXFLAGS) -o $@ $^
+
+$(OBJ)/buscaminas.o: $(SRC)/buscaminas.cpp $(INC)/tablero.h $(INC)/CampoMinas.h
+	$(CXX) -I$(INC) $(CXXFLAGS) -c -o $@ $<
 
 $(OBJ)/tablero.o: $(SRC)/tablero.cpp $(INC)/tablero.h
 	$(CXX) -I$(INC) $(CXXFLAGS) -c -o $@ $<

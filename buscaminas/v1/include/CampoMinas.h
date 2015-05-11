@@ -9,6 +9,7 @@
 
 #include <cstdlib>
 #include <assert.h>
+#include <iostream>
 #include "tablero.h"
 
 using namespace std;
