@@ -8,6 +8,7 @@
 #define CAMPO_MINAS_H
 
 #include <cstdlib>
+#include <ctime>
 #include <assert.h>
 #include <iostream>
 #include "tablero.h"

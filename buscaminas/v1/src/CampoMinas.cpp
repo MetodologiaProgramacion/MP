@@ -10,7 +10,8 @@ CampoMinas::CampoMinas(int f, int c, int n_minas): tablero(f, c){
 	int n_minas_max = 0.5 * f*c;
 	int rand_fila;
 	int rand_columna;
-
+	srand(time(0));
+	
 	n_minas = n_minas < n_minas_min ? n_minas_min : n_minas;
 	n_minas = n_minas > n_minas_max ? n_minas_max : n_minas;
 	while (i < n_minas){
