@@ -178,6 +178,7 @@ void CampoMinas::AbrirTodas(){
 void CampoMinas::PrintCelda(int fila, int columna){
 	switch (tablero.get_estado_casilla(fila, columna)){
 		case CERRADA: cout << "*|";break;
+		case MARCADA: cout << "?|";break;
 		case ABIERTA: PrintCeldaAbierta(fila, columna);
 	}
 }
