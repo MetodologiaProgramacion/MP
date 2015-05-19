@@ -61,7 +61,7 @@ bool CampoMinas::Marcar(int fila, int columna){
 
 	puede_marcarse = tablero.get_estado_casilla(fila, columna) != ABIERTA;
 	if (puede_marcarse){
-		tablero.marcar_casilla(fila, columna);
+		tablero(fila, columna).marcar();
 	}
 
 	return puede_marcarse;

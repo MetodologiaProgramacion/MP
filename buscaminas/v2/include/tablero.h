@@ -214,6 +214,16 @@ public:
   	  * @param tablero Tablero desde donde se copian los datos
     	  */
 	Tablero& operator=(const Tablero& tablero);
+
+  /**
+    * @brief Devuelve la casilla en (fila, columna)
+    *
+    * @param fila Fila donde se encuentra la casilla
+    * @param columna Columna donde se encuentra la casilla
+    *
+    * @return La casilla en (fila, columna)
+    */
+  Casilla& operator()(int fila, int columna);
 };
 
 #endif

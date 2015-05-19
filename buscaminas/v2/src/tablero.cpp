@@ -108,3 +108,7 @@ Tablero& Tablero::operator=(const Tablero& t){
 
 	return *this;
 }
+
+Casilla& Tablero::operator()(int fila, int columna){
+	return tablero[fila*get_columnas() + columna];
+}
