@@ -107,40 +107,40 @@ void CampoMinas::AbrirEntorno(int fila, int columna){
 	}
 }
 
-void CampoMinas::PrettyPrint(){
+void CampoMinas::PrettyPrint(ostream& os){
 	int filas = Filas();
 	int columnas = Columnas();
 
 	//    0 1 2 3 4 5 6 7 8 9 ...
-	cout << ' ' << ' ' << ' ';
+	os << ' ' << ' ' << ' ';
 	for (int j=0; j < columnas; j++){
-		cout << ' ' << j << ' ';
+		os << ' ' << j << ' ';
 	}
-	cout << endl;
+	os << endl;
 
 	//  ----------------------- ...
-	cout << ' ' << ' ' << '-';
+	os << ' ' << ' ' << '-';
 	for (int j=0; j < columnas; j++){
-		cout << "---";
+		os << "---";
 	}
-	cout << endl;
+	os << endl;
 
 	//n_fila | *| *| *| *| ...
 	for (int i=0; i < filas; i++){
-		cout << i << " |";
+		os << i << " |";
 		for (int j=0; j < columnas; j++){
-			cout << ' ';
+			os << ' ';
 			PrintCelda(i, j);
 		}
-		cout << endl;
+		os << endl;
 	}
 
 	//  ----------------------- ...
-	cout << ' ' << ' ' << '-';
+	os << ' ' << ' ' << '-';
 	for (int j=0; j < columnas; j++){
-		cout << "---";
+		os << "---";
 	}
-	cout << endl;
+	os << endl;
 }
 
 bool CampoMinas::TableroFin(){

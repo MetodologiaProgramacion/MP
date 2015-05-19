@@ -136,8 +136,9 @@ public:
 	/**
   	  * @brief Imprime el campo de minas en su estado actual
   	  *
+      * @param El ostream por el que imprimir el campo, por defecto cout
     */
-	void PrettyPrint();
+	void PrettyPrint(ostream& os = std::cout);
 
 	/**
   	  * @brief Imprime el campo de minas con todas las casilla abiertas
