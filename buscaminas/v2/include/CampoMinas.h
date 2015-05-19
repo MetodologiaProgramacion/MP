@@ -23,6 +23,7 @@ using namespace std;
 class CampoMinas{
 protected:
 	Tablero tablero;
+  bool explosion;
 
 	/**
   	  * @brief Imprime una celda en su estado actual

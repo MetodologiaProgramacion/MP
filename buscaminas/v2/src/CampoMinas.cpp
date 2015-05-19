@@ -5,6 +5,8 @@ using namespace std;
 // Implementación de la clase CampoMinas
 
 CampoMinas::CampoMinas(int f, int c, int n_minas): tablero(f, c){
+	explosion = false;
+
 	int i=0;
 	int n_minas_min = 5;
 	int n_minas_max = 0.5 * f*c;
@@ -33,16 +35,6 @@ int CampoMinas::Columnas(){
 }
 
 bool CampoMinas::Explosion(){
-	bool explosion = false;
-	int filas = Filas();
-	int columnas = Columnas();
-
-	for (int i=0; i < filas && explosion == false; i++){
-		for (int j=0; j < columnas && explosion == false; j++){
-			explosion = (tablero.get_contenido_casilla(i, j) == MINA) && (tablero.get_estado_casilla(i, j) == ABIERTA);
-		}
-	}
-
 	return explosion;
 }
 
@@ -82,9 +74,10 @@ bool CampoMinas::Abrir(int fila, int columna){
 	puede_abrirse = tablero.get_estado_casilla(fila, columna) == CERRADA;
 	if (puede_abrirse){
 		tablero.abrir_casilla(fila, columna);
-		if (contenido == VACIA && NumMinasCerca(fila, columna) == 0){
+		if (contenido == MINA)
+			explosion = true;
+		if (contenido == VACIA && NumMinasCerca(fila, columna) == 0)
 			AbrirEntorno(fila, columna);
-		}
 	}
 
 	return puede_abrirse;
