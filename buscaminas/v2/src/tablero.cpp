@@ -41,7 +41,7 @@ ContenidoCasilla Casilla::get_contenido(){
 // Implementación clase Tablero
 
 Tablero::Tablero(int f, int c){
-	assert((f > 0 && f < MAX_FILAS) && (c > 0 && c < MAX_COLUMNAS));
+	assert((f > 0 && f <= MAX_FILAS) && (c > 0 && c <= MAX_COLUMNAS));
 	filas = f;
 	columnas = c;	
 }
