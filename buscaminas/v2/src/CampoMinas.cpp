@@ -75,7 +75,6 @@ bool CampoMinas::Marcar(int fila, int columna){
 
 bool CampoMinas::Abrir(int fila, int columna){
 	bool puede_abrirse;
-<<<<<<< HEAD
 	CeldaPosicion *primera, *siguiente;
 
 	puede_abrirse = tablero.get_estado_casilla(fila, columna) == CERRADA;

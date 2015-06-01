@@ -112,13 +112,7 @@ public:
   */
 class Tablero{
 private:
-<<<<<<< HEAD
-	static const int MAX_FILAS = 20;
-	static const int MAX_COLUMNAS = 20;
-	Casilla tablero[MAX_FILAS][MAX_COLUMNAS];
-=======
 	Casilla *tablero;
->>>>>>> 422c30138ebeeb1d0ca7fbd9346244a5d9236ed3
 	int filas;
 	int columnas;
 
@@ -133,8 +127,6 @@ public:
   	  * @pre el número de columnas debe ser menor o igual a 20
     */
 	Tablero(int filas, int columnas);
-<<<<<<< HEAD
-=======
 	
 	/**
 	  * @brief Inicializa el tablero a partir de otro
@@ -147,7 +139,6 @@ public:
 	  * @brief Destructor de el tablero
 	  */
 	~Tablero();
->>>>>>> 422c30138ebeeb1d0ca7fbd9346244a5d9236ed3
 
 	/**
   	  * @brief Devuelve el número de filas del tablero
@@ -216,8 +207,6 @@ public:
   	  * @see ContenidoCasilla
     */
 	void poner_mina(int fila, int columna);
-<<<<<<< HEAD
-=======
 	
 	/**
   	  * @brief Operador = de la clase tablero
@@ -235,7 +224,6 @@ public:
     * @return La casilla en (fila, columna)
     */
   Casilla& operator()(int fila, int columna);
->>>>>>> 422c30138ebeeb1d0ca7fbd9346244a5d9236ed3
 };
 
 #endif
