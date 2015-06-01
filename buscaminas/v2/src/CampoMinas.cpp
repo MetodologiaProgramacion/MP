@@ -11,6 +11,8 @@ struct CeldaPosicion{
 };
 
 CampoMinas::CampoMinas(int f, int c, int n_minas): tablero(f, c){
+	explosion = false;
+
 	int i=0;
 	int n_minas_min = 5;
 	int n_minas_max = 0.5 * f*c;
@@ -39,16 +41,6 @@ int CampoMinas::Columnas(){
 }
 
 bool CampoMinas::Explosion(){
-	bool explosion = false;
-	int filas = Filas();
-	int columnas = Columnas();
-
-	for (int i=0; i < filas && explosion == false; i++){
-		for (int j=0; j < columnas && explosion == false; j++){
-			explosion = (tablero.get_contenido_casilla(i, j) == MINA) && (tablero.get_estado_casilla(i, j) == ABIERTA);
-		}
-	}
-
 	return explosion;
 }
 
@@ -75,7 +67,7 @@ bool CampoMinas::Marcar(int fila, int columna){
 
 	puede_marcarse = tablero.get_estado_casilla(fila, columna) != ABIERTA;
 	if (puede_marcarse){
-		tablero.marcar_casilla(fila, columna);
+		tablero(fila, columna).marcar();
 	}
 
 	return puede_marcarse;
@@ -83,6 +75,7 @@ bool CampoMinas::Marcar(int fila, int columna){
 
 bool CampoMinas::Abrir(int fila, int columna){
 	bool puede_abrirse;
+<<<<<<< HEAD
 	CeldaPosicion *primera, *siguiente;
 
 	puede_abrirse = tablero.get_estado_casilla(fila, columna) == CERRADA;
@@ -101,6 +94,8 @@ bool CampoMinas::Abrir(int fila, int columna){
 		tablero.abrir_casilla(fil, col);
 		delete primera;
 		primera = siguiente;
+		if (tablero.get_contenido_casilla(fil, col) == MINA)
+			explosion = true;
 		if (tablero.get_contenido_casilla(fil, col) == VACIA && NumMinasCerca(fil, col) == 0){
 			for (int i = fil-1; i <= fil+1; i++){
 				if (i >= 0 && i < Filas()){
@@ -121,46 +116,46 @@ bool CampoMinas::Abrir(int fila, int columna){
 
 	return true;
 }
-
-void CampoMinas::PrettyPrint(){
+void CampoMinas::PrettyPrint(ostream& os){
 	int filas = Filas();
 	int columnas = Columnas();
 
 	//    0 1 2 3 4 5 6 7 8 9 ...
-	cout << ' ' << ' ' << ' ';
+	os << ' ' << ' ' << ' ';
 	for (int j=0; j < columnas; j++){
-		cout << ' ' << j << ' ';
+		os << ' ' << j << ' ';
 	}
-	cout << endl;
+	os << endl;
 
 	//  ----------------------- ...
-	cout << ' ' << ' ' << '-';
+	os << ' ' << ' ' << '-';
 	for (int j=0; j < columnas; j++){
-		cout << "---";
+		os << "---";
 	}
-	cout << endl;
+	os << endl;
 
 	//n_fila | *| *| *| *| ...
 	for (int i=0; i < filas; i++){
-		cout << i << " |";
+		os << i << " |";
 		for (int j=0; j < columnas; j++){
-			cout << ' ';
+			os << ' ';
 			PrintCelda(i, j);
 		}
-		cout << endl;
+		os << endl;
 	}
 
 	//  ----------------------- ...
-	cout << ' ' << ' ' << '-';
+	os << ' ' << ' ' << '-';
 	for (int j=0; j < columnas; j++){
-		cout << "---";
+		os << "---";
 	}
-	cout << endl;
+	os << endl;
 }
 
 bool CampoMinas::TableroFin(){
 	bool puede_imprimirse = Victoria() || Explosion();
-
+	int filas = Filas();
+	int columnas = Columnas();
 	if (puede_imprimirse){
 		AbrirTodas();
 		PrettyPrint();

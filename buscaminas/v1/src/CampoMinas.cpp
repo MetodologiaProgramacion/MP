@@ -217,7 +217,7 @@ int CampoMinas::NumMinasCerca(int fila, int columna){
 	if (columna == Columnas()-1)
 		q = columna;
 
-	for (int i=f; i <= (fila + 1); i++){
+	for (int i=f; i <= p; i++){
 		for (int j=c; j <= q; j++){
 			if (tablero.get_contenido_casilla(i, j) == MINA)
 				num_minas_cerca++;

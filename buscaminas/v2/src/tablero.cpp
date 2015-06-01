@@ -41,9 +41,24 @@ ContenidoCasilla Casilla::get_contenido(){
 // Implementación clase Tablero
 
 Tablero::Tablero(int f, int c){
-	assert((f > 0 && f <= MAX_FILAS) && (c > 0 && c <= MAX_COLUMNAS));
 	filas = f;
-	columnas = c;	
+	columnas = c;
+	tablero = new Casilla[f*c];	
+}
+
+Tablero::Tablero(const Tablero& t){
+	this->filas = t.filas;
+	this->columnas = t.columnas;
+	this->tablero = new Casilla[filas * columnas];
+
+	for (int i=0; i < filas*columnas; i++){
+		this->tablero[i] = t.tablero[i];
+	}
+	
+}
+
+Tablero::~Tablero(){
+	delete[] tablero;
 }
 
 int Tablero::get_filas(){
@@ -55,26 +70,45 @@ int Tablero::get_columnas(){
 }
 
 EstadoCasilla Tablero::get_estado_casilla(int f, int c){
-	assert((f >= 0 && f < filas) && (c >= 0 && c < columnas));
-	return tablero[f][c].get_estado();
+	assert((f >= 0 && f <= filas) && (c >= 0 && c <= columnas));
+	return tablero[f*get_columnas() + c].get_estado();
 }
 
 void Tablero::abrir_casilla(int f, int c){
-	assert((f >= 0 && f < filas) && (c >= 0 && c < columnas));
-	tablero[f][c].abrir();
+	assert((f >= 0 && f <= filas) && (c >= 0 && c <= columnas));
+	tablero[f*get_columnas() + c].abrir();
 }
 
 void Tablero::marcar_casilla(int f, int c){
-	assert((f >= 0 && f < filas) && (c >= 0 && c < columnas));
-	tablero[f][c].marcar();
+	assert((f >= 0 && f <= filas) && (c >= 0 && c <= columnas));
+	tablero[f*get_columnas() + c].marcar();
 }
 
 ContenidoCasilla Tablero::get_contenido_casilla(int f, int c){
-	assert((f >= 0 && f < filas) && (c >= 0 && c < columnas));
-	return tablero[f][c].get_contenido();
+	assert((f >= 0 && f <= filas) && (c >= 0 && c <= columnas));
+	return tablero[f*get_columnas() + c].get_contenido();
 }
 
 void Tablero::poner_mina(int f, int c){
-	assert((f >= 0 && f < filas) && (c >= 0 && c < columnas));
-	tablero[f][c].set_contenido(MINA);
+	assert((f >= 0 && f <= filas) && (c >= 0 && c <= columnas));
+	tablero[f*get_columnas() + c].set_contenido(MINA);
+}
+
+Tablero& Tablero::operator=(const Tablero& t){
+	if (&t != this){
+		this->filas = t.filas;
+		this->columnas = t.columnas;
+		delete[] tablero;
+		this->tablero = new Casilla[filas*columnas];
+
+		for (int i=0; i < filas*columnas; i++){
+			this->tablero[i] = t.tablero[i];
+		}
+	}
+
+	return *this;
+}
+
+Casilla& Tablero::operator()(int fila, int columna){
+	return tablero[fila*get_columnas() + columna];
 }
