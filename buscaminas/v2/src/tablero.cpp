@@ -37,6 +37,48 @@ ContenidoCasilla Casilla::get_contenido(){
 	return contenido;
 }
 
+ostream& operator<<(ostream& os, Casilla casilla){
+	switch (casilla.get_estado()){
+		case CERRADA: os << "*";break;
+		case MARCADA: os << "?";break;
+		case ABIERTA: os << " ";break;
+		//default: os.setState(ios::failbit);
+	}
+
+	switch (casilla.get_contenido()){
+		case VACIA: os << "0|";break;
+		case MINA: os << "1|";break;
+		//default: os.setState(ios::failbit);
+	}
+
+	return os;
+}
+
+istream& operator>>(istream& is, Casilla& casilla){
+	while (is.peek() == '\n')
+		is.ignore();
+
+	switch(is.peek()){
+		case '*': casilla.cerrar();break;
+		case '?': casilla.marcar();break;
+		case ' ': casilla.abrir();break;
+		//default: is.setState(ios::failbit);
+	}
+	is.ignore();
+	switch(is.peek()){
+		case '0': casilla.set_contenido(VACIA);break;
+		case '1': casilla.set_contenido(MINA);break;
+		//default: is.setState(ios::failbit);
+	}
+	is.ignore();
+	// saltamos '|'
+	is.ignore();
+
+	return is;
+}
+
+
+
 
 // Implementación clase Tablero
 
@@ -111,4 +153,34 @@ Tablero& Tablero::operator=(const Tablero& t){
 
 Casilla& Tablero::operator()(int fila, int columna){
 	return tablero[fila*get_columnas() + columna];
+}
+
+ostream& operator<<(ostream& os, Tablero& tablero){
+	int filas = tablero.get_filas();
+	int columnas = tablero.get_columnas();
+
+	os << filas << 'X' << columnas << endl;
+	for (int i=0; i<filas; i++){
+		for (int j=0; j<columnas; j++){
+			os << tablero(i, j);
+		}
+		os << endl;
+	}
+
+	return os;
+}
+
+istream& operator>>(istream& is, Tablero& tablero){
+	is >> tablero.filas;
+	is.ignore();
+	is >> tablero.columnas;
+
+	for (int i=0; i<tablero.filas; i++){
+		for (int j=0; j<tablero.columnas; j++){
+			is >> tablero.tablero[i*tablero.columnas + j];
+		}
+		is.ignore();
+	}
+
+	return is;
 }

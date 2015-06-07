@@ -145,8 +145,6 @@ void CampoMinas::PrettyPrint(ostream& os){
 
 bool CampoMinas::TableroFin(){
 	bool puede_imprimirse = Victoria() || Explosion();
-	int filas = Filas();
-	int columnas = Columnas();
 
 	if (puede_imprimirse){
 		AbrirTodas();
@@ -206,7 +204,7 @@ int CampoMinas::NumMinasCerca(int fila, int columna){
 	if (columna == Columnas()-1)
 		q = columna;
 
-	for (int i=f; i <= (fila + 1); i++){
+	for (int i=f; i <= p; i++){
 		for (int j=c; j <= q; j++){
 			if (tablero.get_contenido_casilla(i, j) == MINA)
 				num_minas_cerca++;
@@ -214,4 +212,14 @@ int CampoMinas::NumMinasCerca(int fila, int columna){
 	}
 
 	return num_minas_cerca;
+}
+
+bool CampoMinas::Leer(istream& is){
+	is >> tablero;
+	return is;
+}
+
+bool CampoMinas::Escribir(ostream& os){
+	os << tablero;
+	return os;
 }

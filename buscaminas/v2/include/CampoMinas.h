@@ -148,6 +148,24 @@ public:
   	  * @pre Tiene que haber terminado el juego
     */
 	bool TableroFin();
+
+  /**
+    * @brief Lee un campo de minas desde un istream, permite recuperar un juego guardado
+    *
+    * @param is Istream desde el que se leera el campo
+    *
+    * @return Si se ha leido correctamente
+    */
+  bool Leer(istream& is);
+
+  /**
+    * @brief Escribe un campo de minas desde un ostream, permite guardar el juego
+    *
+    * @param is Ostream a traves del que se escribirá el campo
+    *
+    * @return Si se ha escrito correctamente
+    */
+  bool Escribir(ostream& os);
 };
 
 #endif

@@ -11,6 +11,7 @@
 
 #include <cstdlib>
 #include <assert.h>
+#include <iostream>
 
 /**
   * @brief Estado de una casilla
@@ -101,6 +102,16 @@ public:
     */
 	ContenidoCasilla get_contenido();
 };
+
+  /**
+    * @brief Sobrecarga del operador << para guardar una casilla mediante un ostream
+    */
+std::ostream& operator<<(std::ostream& os, Casilla casilla);
+
+/**
+    * @brief Sobrecarga del operador >> para leer una casilla mediante un istream
+    */
+std::istream& operator>>(std::istream& is, Casilla& casilla);
 
 
 /**
@@ -224,6 +235,17 @@ public:
     * @return La casilla en (fila, columna)
     */
   Casilla& operator()(int fila, int columna);
+
+
+  /**
+    * @brief Sobrecarga del operador >> para leer una casilla mediante un istream
+    */
+  friend std::istream& operator>>(std::istream& is, Tablero& tablero);
 };
+
+/**
+  * @brief Sobrecarga del operador << para guardar el tablero mediante un ostream
+  */
+std::ostream& operator<<(std::ostream& os, Tablero& tablero);
 
 #endif
