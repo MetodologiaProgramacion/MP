@@ -4,6 +4,12 @@ using namespace std;
 
 // Implementación de la clase CampoMinas
 
+struct CeldaPosicion{
+	int fila;
+	int columna;
+	CeldaPosicion* sig;
+};
+
 CampoMinas::CampoMinas(int f, int c, int n_minas): tablero(f, c){
 	int i=0;
 	int n_minas_min = 5;
@@ -78,7 +84,6 @@ bool CampoMinas::Marcar(int fila, int columna){
 bool CampoMinas::Abrir(int fila, int columna){
 	bool puede_abrirse;
 	ContenidoCasilla contenido = tablero.get_contenido_casilla(fila, columna);
-
 	puede_abrirse = tablero.get_estado_casilla(fila, columna) == CERRADA;
 	if (puede_abrirse){
 		tablero.abrir_casilla(fila, columna);
@@ -86,7 +91,6 @@ bool CampoMinas::Abrir(int fila, int columna){
 			AbrirEntorno(fila, columna);
 		}
 	}
-
 	return puede_abrirse;
 }
 
@@ -213,7 +217,7 @@ int CampoMinas::NumMinasCerca(int fila, int columna){
 	if (columna == Columnas()-1)
 		q = columna;
 
-	for (int i=f; i <= (fila + 1); i++){
+	for (int i=f; i <= p; i++){
 		for (int j=c; j <= q; j++){
 			if (tablero.get_contenido_casilla(i, j) == MINA)
 				num_minas_cerca++;

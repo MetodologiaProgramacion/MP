@@ -52,14 +52,6 @@ protected:
 	int NumMinasCerca(int fila, int columna);
 
 	/**
-  	  * @brief Abre (si se puede) las casillas del entorno
-  	  *
-  	  * @param fila Fila en la que se encuentra la casilla
-  	  * @param columna Columna en la que se encuentra la casilla
-    */
-	void AbrirEntorno(int fila, int columna);
-
-	/**
   	  * @brief Abre forzosamente todas las casillas del tablero
     */
 	void AbrirTodas();
@@ -139,7 +131,7 @@ public:
       * @param El ostream por el que imprimir el campo, por defecto cout
     */
 	void PrettyPrint(ostream& os = std::cout);
-
+  
 	/**
   	  * @brief Imprime el campo de minas con todas las casilla abiertas
   	  *

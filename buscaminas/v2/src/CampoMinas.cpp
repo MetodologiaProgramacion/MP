@@ -4,6 +4,12 @@ using namespace std;
 
 // Implementación de la clase CampoMinas
 
+struct CeldaPosicion{
+	int fila;
+	int columna;
+	CeldaPosicion* sig;
+};
+
 CampoMinas::CampoMinas(int f, int c, int n_minas): tablero(f, c){
 	explosion = false;
 
@@ -69,44 +75,46 @@ bool CampoMinas::Marcar(int fila, int columna){
 
 bool CampoMinas::Abrir(int fila, int columna){
 	bool puede_abrirse;
-	ContenidoCasilla contenido = tablero.get_contenido_casilla(fila, columna);
+	CeldaPosicion *primera, *siguiente;
 
 	puede_abrirse = tablero.get_estado_casilla(fila, columna) == CERRADA;
 	if (puede_abrirse){
-		tablero.abrir_casilla(fila, columna);
-		if (contenido == MINA)
-			explosion = true;
-		if (contenido == VACIA && NumMinasCerca(fila, columna) == 0)
-			AbrirEntorno(fila, columna);
+		primera = new CeldaPosicion;
+		primera->fila = fila;
+		primera->columna = columna;
+		primera->sig = 0;
 	}
-
-	return puede_abrirse;
-}
-
-void CampoMinas::AbrirEntorno(int fila, int columna){
-	// indices de los bucles que recorren el entorno
-	int f=fila-1, c=columna-1;
-	// valores en los que paran los bucles
-	int p=fila+1, q=columna+1;
-
-	// condiciones para cubrir los extremos y las esquinas
-	if (fila == 0)
-		f = fila;
-	if (fila == Filas()-1)
-		p = fila;
-	if (columna == 0)
-		c = columna;
-	if (columna == Columnas()-1)
-		q = columna;
-
-	for (int i=f; i <= p; i++){
-		for (int j=c; j <= q; j++){
-			if (tablero.get_contenido_casilla(i, j) == VACIA)
-				Abrir(i,j);
+	else
+		return false;
+	do{
+		int fil = primera->fila;
+		int col = primera->columna;
+		siguiente = primera->sig;
+		tablero.abrir_casilla(fil, col);
+		delete primera;
+		primera = siguiente;
+		if (tablero.get_contenido_casilla(fil, col) == MINA)
+			explosion = true;
+		if (tablero.get_contenido_casilla(fil, col) == VACIA && NumMinasCerca(fil, col) == 0){
+			for (int i = fil-1; i <= fil+1; i++){
+				if (i >= 0 && i < Filas()){
+					for (int j = col-1;j <= col+1;j++){
+						if (j >= 0 && j < Columnas() && tablero.get_estado_casilla(i,j) == CERRADA){
+							primera = new CeldaPosicion;
+							primera->fila = i;
+							primera->columna = j;
+							primera->sig = siguiente;
+							siguiente = primera;
+						}
+					}
+				}
+			}
 		}
 	}
-}
+	while (siguiente != 0);
 
+	return true;
+}
 void CampoMinas::PrettyPrint(ostream& os){
 	int filas = Filas();
 	int columnas = Columnas();
